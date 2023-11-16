@@ -1,32 +1,32 @@
-import os
-from os.path import join, dirname
 from typing import Optional
+from os.path import join
+import environ
 
-from dotenv import load_dotenv
+root = environ.Path(__file__) - 2  # get root of the project
+env = environ.Env()
+environ.Env.read_env(join(root, '.env'))  # reading .env file
 
-dotenv_path = join(dirname(__file__), "./", ".env")
-load_dotenv(dotenv_path)
-
-APP_NAME: str = "django-api-template"
-
-# logger
-LOG_DIR: str = os.getenv("LOG_DIR", "./logs")
-LOG_LEVEL: str = os.getenv("LOG_LEVEL", "INFO")
-LOG_HOST: Optional[str] = os.getenv("LOG_HOST", None)
-LOG_PORT: int = int(os.getenv("LOG_PORT", 10518))
-
-# DB
-MYSQL_HOST: str = os.getenv("MYSQL_HOST")
-MYSQL_PORT: int = int(os.getenv("MYSQL_PORT", 3306))
-MYSQL_USER: str = os.getenv("MYSQL_USER")
-MYSQL_DB: str = os.getenv("MYSQL_DB")
-MYSQL_PASSWORD: str = os.getenv("MYSQL_PASSWORD")
-MYSQL_POOL_SIZE: int = int(os.getenv("MYSQL_POOL_SIZE", 3))
-MYSQL_CONNECTION_TIMEOUT: int = int(os.getenv("MYSQL_CONNECTION_TIMEOUT", 20))
+APP_NAME: str = env.str("APP_NAME", "django-api-template")
+DEBUG: bool = env.bool("DEBUG", True)
 
 # Django Secret Key
-DJANGO_SECRET_KEY: str = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY: str = env.str("SECRET_KEY")
+
+# logger
+LOG_DIR: str = env.str("LOG_DIR", "./logs")
+LOG_LEVEL: str = env.str("LOG_LEVEL", "INFO")
+LOG_HOST: Optional[str] = env.str("LOG_HOST", None)
+LOG_PORT: int = env.int("LOG_PORT", 10518)
+
+# DB
+# MYSQL_HOST: str = env.str("MYSQL_HOST")
+# MYSQL_PORT: int = env.int("MYSQL_PORT", 3306)
+# MYSQL_USER: str = env.str("MYSQL_USER")
+# MYSQL_DB: str = env.str("MYSQL_DB")
+# MYSQL_PASSWORD: str = env.str("MYSQL_PASSWORD")
+# MYSQL_POOL_SIZE: int = env.int("MYSQL_POOL_SIZE", 3)
+# MYSQL_CONNECTION_TIMEOUT: int = env.int("MYSQL_CONNECTION_TIMEOUT", 20)
 
 # Auth
-ACCESS_TOKEN_LIFETIME: int = int(os.getenv("ACCESS_TOKEN_LIFETIME", 60 * 60))
-REFRESH_TOKEN_LIFETIME: int = int(os.getenv("REFRESH_TOKEN_LIFETIME", 24 * 60 * 60))
+ACCESS_TOKEN_LIFETIME: int = env.int("ACCESS_TOKEN_LIFETIME", 60 * 60)
+REFRESH_TOKEN_LIFETIME: int = env.int("REFRESH_TOKEN_LIFETIME", 24 * 60 * 60)
