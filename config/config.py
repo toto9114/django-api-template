@@ -4,13 +4,15 @@ import environ
 
 root = environ.Path(__file__) - 2  # get root of the project
 env = environ.Env()
-environ.Env.read_env(join(root, '.env'))  # reading .env file
+environ.Env.read_env(join(root, ".env"))  # reading .env file
 
 APP_NAME: str = env.str("APP_NAME", "django-api-template")
 DEBUG: bool = env.bool("DEBUG", True)
 
 # Django Secret Key
-SECRET_KEY: str = env.str("SECRET_KEY")
+SECRET_KEY: str = env.str(
+    "SECRET_KEY", "*dlh7&al(aip7(%j@wqjk+!05gd7d&_ed1v1@6$)2o!*20bzev"
+)
 
 # logger
 LOG_DIR: str = env.str("LOG_DIR", "./logs")
